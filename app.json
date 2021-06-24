@@ -4,29 +4,36 @@
     "slug": "mtuHealthServices",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./App/assets/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./App/assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./App/assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./App/assets/favicon.png",
+      "config": {
+        "apiKey": "AIzaSyBRm3g_C9KALcuKiQlf1JFy1b7_Pvpm_bo",
+        "authDomain": "mtuhealthservices.firebaseapp.com",
+        "projectId": "mtuhealthservices",
+        "storageBucket": "mtuhealthservices.appspot.com",
+        "messagingSenderId": "281999322471",
+        "appId": "1:281999322471:web:b4551ec023d51f27f253c2",
+        "measurementId": "G-V3GT05113J"
+      }
     }
   }
 }

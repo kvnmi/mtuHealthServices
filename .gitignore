@@ -11,3 +11,11 @@ web-build/
 
 # macOS
 .DS_Store
+
+db/
+App/config/keys.jks
+App/api/firebase.js
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+.firebaserc
