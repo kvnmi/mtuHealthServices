@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import AuthNavigator from "./App/Navigation/AuthNavigator";
-import MainNavigator from "./App/Navigation/MainNavigator";
+import AuthNavigator from "./App/Navigation/patientNavigator/AuthNavigator";
 import AuthContext from "./App/auth/context";
 import AppLoading from "expo-app-loading";
 import storage from "./App/auth/storage";
 import NavigationTheme from "./App/Navigation/NavigationTheme";
+import MainStackNavigator from "./App/Navigation/MainStackNavigator";
 
 export default function App() {
   const [user, setUser] = useState(); // Current User
@@ -30,7 +30,7 @@ export default function App() {
   return (
     <AuthContext.Provider value={{ user, setUser }}>
       <NavigationContainer theme={NavigationTheme}>
-        {user ? <MainNavigator /> : <AuthNavigator />}
+        {user ? <MainStackNavigator user={false} /> : <AuthNavigator />}
       </NavigationContainer>
     </AuthContext.Provider>
   );

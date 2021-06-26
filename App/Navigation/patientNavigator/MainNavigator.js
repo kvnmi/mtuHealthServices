@@ -1,10 +1,9 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "../Screens/HomeScreen";
-import BookingScreen from "../Screens/BookingScreen";
+import HomeScreen from "../../Screens/HomeScreen";
+import BookingScreen from "../../Screens/BookingScreen";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AccountNavigator from "./AccountNavigator";
-import colors from "../config/colors";
 import NewListingButton from "./NewListingButton";
 
 const Tab = createBottomTabNavigator();

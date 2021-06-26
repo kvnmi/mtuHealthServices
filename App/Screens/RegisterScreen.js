@@ -25,15 +25,15 @@ const validationSchema = Yup.object().shape({
 
 function RegisterScreen({ navigation }) {
   const [visible, setVisible] = useState(true); // Password text entry
-  const { logIn } = useAuth(); // store authentication state
+  const { logOut } = useAuth(); // store authentication state
 
   const handleVisibility = () => {
     return visible === true ? setVisible(false) : setVisible(true);
   }; // Password entry visibility
 
   const handleSubmit = async (result) => {
-    logIn(await regUser.regUsers(result));
-  }; // Register User
+    await regUser.regUsers(result);
+  }; // Register new patient.
 
   return (
     <ImageBackground
@@ -42,7 +42,7 @@ function RegisterScreen({ navigation }) {
     >
       <View style={styles.container}>
         <View style={styles.appContainer}>
-          <AppText style={styles.textHeader}>Create Account</AppText>
+          <AppText style={styles.textHeader}>Register A New Patient</AppText>
           <AppText style={styles.headerSubtitle}>
             Please fill the input below
           </AppText>
@@ -66,7 +66,7 @@ function RegisterScreen({ navigation }) {
                 fieldTitle="Fullname"
                 autoCapitalize="words"
                 autoComplete
-                autoCapitalizeType="name"
+                autoCompleteType="name"
               />
               <FormFields
                 iconName="alien-outline"
@@ -85,18 +85,16 @@ function RegisterScreen({ navigation }) {
                 iconName="lock"
                 fieldName="password"
                 name_end="eye"
+                autoCapitalize="none"
                 fieldTitle="Password"
                 secureTextEntry={visible}
                 onPress={handleVisibility}
               />
               <SubmitButton title="Register" />
             </AppForm>
-            <View style={{ flexDirection: "row" }}>
-              <AppText
-                style={{ color: "white", left: 55 }}
-                onPress={() => navigation.navigate("Login")}
-              >
-                Already have an account? Sign in
+            <View>
+              <AppText style={styles.logOut} onPress={() => logOut()}>
+                Log Out
               </AppText>
             </View>
           </KeyboardAvoidingView>
@@ -114,6 +112,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: colors.primary,
     opacity: 0.8,
+    paddingBottom: 1,
   },
   appContainer: {
     backgroundColor: colors.primary,
@@ -131,11 +130,18 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: colors.white,
     marginBottom: 4,
+    paddingTop: 10,
   },
   headerSubtitle: {
     alignSelf: "center",
     fontSize: 15,
     color: colors.white,
+  },
+  logOut: {
+    alignSelf: "center",
+    fontSize: 20,
+    color: colors.white,
+    fontWeight: "bold",
   },
 });
 

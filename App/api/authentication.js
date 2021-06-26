@@ -8,12 +8,17 @@ const regUsers = async (userCred) => {
     );
     if (user) {
       const currentUser = auth.currentUser.uid;
+      user.user.updateProfile({
+        displayName: userCred.name,
+      });
       try {
         await db.collection("users").doc(currentUser).set({
           name: userCred.name,
           email: userCred.email,
           matricNumber: userCred.matricNumber,
           dateCreated: new Date(),
+          userRole: "patient",
+          userId: auth.currentUser.uid,
         });
       } catch (error) {
         console.log(
@@ -21,7 +26,6 @@ const regUsers = async (userCred) => {
           error
         );
       }
-      return user.user.uid;
     }
   } catch (error) {
     console.log("Something went wrong while registering user", error);
