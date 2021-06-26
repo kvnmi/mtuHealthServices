@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import MainNavigator from "./patientNavigator/MainNavigator";
 import MainNurseNavigator from "./nurseNavigator/MainNurseNavigator";
-import userCredentials from "../api/userCredentials";
 
 const Stack = createStackNavigator();
 
