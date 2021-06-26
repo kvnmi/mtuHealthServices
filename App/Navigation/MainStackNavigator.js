@@ -6,11 +6,11 @@ import userCredentials from "../api/userCredentials";
 
 const Stack = createStackNavigator();
 
-const MainStackNavigator = ({ user = true }) => (
+const MainStackNavigator = ({ userRole }) => (
   <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
     <Stack.Screen
       name="Main"
-      component={user ? MainNavigator : MainNurseNavigator}
+      component={userRole === "patient" ? MainNavigator : MainNurseNavigator}
       options={{ headerShown: false }}
     />
   </Stack.Navigator>
