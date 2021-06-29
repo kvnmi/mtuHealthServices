@@ -14,12 +14,18 @@ function AppointmentsScreen(props) {
     if (result) {
       try {
         setAppointmentDate(result.data);
+        for (let x of appointmentDate)
+          console.log(x.appointmentId.date.toDate(), new Date());
       } catch (error) {
         console.log("couldnt store appointmentDate", error);
       }
-    }
+    } else console.log("error");
   };
 
+  const deleteAppointment = (id) => {
+    const data = appointmentDate.filter((x) => x.appointmentId.id != id);
+    setAppointmentDate[data];
+  };
   useEffect(() => {
     getAppointments();
   }, []);
@@ -30,13 +36,16 @@ function AppointmentsScreen(props) {
           YOUR UPCOMING APPOINTMENTS. BE PUNCTUAL!!!
         </AppText>
         <FlatList
-          data={appointmentDate}
-          keyExtractor={(m) => m.appointmentId.toString()}
+          data={appointmentDate.filter(
+            (x) => x.appointmentId.date.toDate() >= new Date()
+          )}
+          keyExtractor={(m) => m.appointmentId.id}
           maxToRenderPerBatch={1}
           renderItem={({ item }) => (
             <AppointmentCard
               date={item.appointmentDate}
               time={item.appointmentTime}
+              onPress={() => deleteAppointment(item.appointmentId.id)}
             />
           )}
         />

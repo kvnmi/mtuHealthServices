@@ -9,13 +9,16 @@ import appointments from "../api/appointments";
 
 function BookingScreen(props) {
   const [date, setDate] = useState(""); // Date state variable
+  const [rawDate, setRawDate] = useState(new Date()); // Date state variable
   const [time, setTime] = useState(""); // Time state variable
   const [dateVisible, setDateVisible] = useState(false);
   const [timeVisible, setTimeVisible] = useState(false);
 
-  const onPickDate = (date) => {
+  const onPickDate = (date, rawDate) => {
     setDate(date);
+    setRawDate(rawDate);
     console.log(date);
+    console.log(rawDate);
     setDateVisible(false);
     setTimeVisible(true);
   }; // Pick appointment date
@@ -28,7 +31,11 @@ function BookingScreen(props) {
   }; // Pick appointment time
 
   const bookAppointments = async () => {
-    await appointments.setAppointment(date, time);
+    try {
+      await appointments.setAppointment(date, time, rawDate);
+    } catch (error) {
+      console.log("Couldnt book appointments", error);
+    }
   }; // Books appointment
 
   return (
@@ -49,7 +56,7 @@ function BookingScreen(props) {
           isVisible={dateVisible}
           mode="date"
           onCancel={() => setDateVisible(false)}
-          onConfirm={(date) => onPickDate(date.toLocaleDateString())}
+          onConfirm={(date) => onPickDate(date.toDateString(), date)}
         />
         <DateTimePickerModal
           isVisible={timeVisible}

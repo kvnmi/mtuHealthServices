@@ -3,17 +3,21 @@ import { View, StyleSheet } from "react-native";
 import AppButtons from "../config/AppButton";
 import AppText from "../config/AppText";
 
-function AppointmentCard({ date, time }) {
+function AppointmentCard({ date, time, onPress }) {
   return (
     <View style={styles.card}>
       <AppText style={{ fontSize: 19, marginBottom: 20, fontStyle: "italic" }}>
         SUCCESSFULLY BOOKED APPOINTMENT!!!
       </AppText>
       <AppText style={{ fontSize: 18, marginBottom: 20 }}>
-        You are scheduled to visit the clinic on the {date}, at {time}. Lateness
+        You are scheduled to visit the clinic on {date}, at {time}. Lateness
         will not be tolerated.
       </AppText>
-      <AppButtons title="Cancel Appointment" style={styles.button} />
+      <AppButtons
+        title="Cancel Appointment"
+        style={styles.button}
+        onPress={onPress}
+      />
     </View>
   );
 }

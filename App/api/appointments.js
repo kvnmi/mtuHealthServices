@@ -18,15 +18,20 @@ const getAppointments = async () => {
   }
 };
 
-const setAppointment = async (date, time) => {
+const setAppointment = async (date, time, rawDate) => {
   const currentUser = auth.currentUser.uid;
+  const id = Math.random().toString(36).substring(7);
   const appointmentRef = await db
     .collection("appointments")
     .doc(currentUser)
     .get();
 
   const data = [
-    { appointmentId: new Date(), appointmentDate: date, appointmentTime: time },
+    {
+      appointmentId: { id, date: rawDate },
+      appointmentDate: date,
+      appointmentTime: time,
+    },
   ];
   try {
     appointmentRef.exists
@@ -35,7 +40,7 @@ const setAppointment = async (date, time) => {
           .doc(currentUser)
           .update({
             data: firebase.firestore.FieldValue.arrayUnion({
-              appointmentId: new Date(),
+              appointmentId: { id, date: rawDate },
               appointmentDate: date,
               appointmentTime: time,
             }),
