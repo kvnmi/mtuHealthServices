@@ -33,7 +33,7 @@ function WelcomeScreen({ navigation }) {
   const handleSubmit = async (userCred) => {
     const response = await login.loginUser(userCred);
     response
-      ? logIn(response)
+      ? logIn(response.uid, response.userRole)
       : console.log("Error saving credentials on login screen");
   }; // Logs user in
 

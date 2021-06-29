@@ -7,6 +7,7 @@ import storage from "./App/auth/storage";
 import NavigationTheme from "./App/Navigation/NavigationTheme";
 import MainStackNavigator from "./App/Navigation/MainStackNavigator";
 import userCredentials from "./App/api/userCredentials";
+import roleCredentials from "./App/auth/roleCredentials";
 
 export default function App() {
   const [user, setUser] = useState(); // Current User
@@ -15,9 +16,10 @@ export default function App() {
 
   const readUser = async () => {
     const result = await storage.getToken();
-    if (!result) return;
+    const userRole = await roleCredentials.getUserRole();
+    if (!result || !userRole) return;
     setUser(result);
-    checkUserRole();
+    setUserRole(userRole);
   }; // Check for existing user
 
   const checkUserRole = async () => {
@@ -25,10 +27,6 @@ export default function App() {
     if (userRole) setUserRole(userRole);
     console.log(userRole);
   }; // Check for current user role
-
-  useEffect(() => {
-    checkUserRole();
-  }, [userRole]);
 
   if (!isReady) {
     return (
@@ -41,7 +39,7 @@ export default function App() {
   }
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ user, userRole, setUser, setUserRole }}>
       <NavigationContainer theme={NavigationTheme}>
         {user ? <MainStackNavigator userRole={userRole} /> : <AuthNavigator />}
       </NavigationContainer>

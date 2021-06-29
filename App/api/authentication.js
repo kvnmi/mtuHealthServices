@@ -1,4 +1,5 @@
 import { auth, db } from "./firebase";
+import userCredentials from "./userCredentials";
 
 const regUsers = async (userCred) => {
   try {
@@ -39,7 +40,8 @@ const loginUser = async (userCred) => {
       userCred.password
     );
     if (result) {
-      return result.user.uid;
+      const userRole = await userCredentials.getCred();
+      return { uid: result.user.uid, userRole: userRole };
     }
   } catch (error) {
     console.log("Something went wrong while login user", error);
