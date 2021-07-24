@@ -24,6 +24,7 @@ const validationSchema = Yup.object().shape({
 
 function WelcomeScreen({ navigation }) {
   const [visible, setVisible] = useState(true);
+  const [loginError, setLoginError] = useState(false);
   const { logIn } = useAuth(); // store authentication state
 
   const handleVisibility = () => {
@@ -31,10 +32,17 @@ function WelcomeScreen({ navigation }) {
   }; // Password text entry
 
   const handleSubmit = async (userCred) => {
-    const response = await login.loginUser(userCred);
-    response
-      ? logIn(response.uid, response.userRole)
-      : console.log("Error saving credentials on login screen");
+    try {
+      const response = await login.loginUser(userCred);
+      if (!response) {
+        setLoginError(true);
+      }
+      if (response) {
+        logIn(response.uid, response.userRole), setLoginError(false);
+      }
+    } catch (error) {
+      console.log("Error saving credentials on login screen", error);
+    }
   }; // Logs user in
 
   return (
@@ -53,6 +61,11 @@ function WelcomeScreen({ navigation }) {
           style={styles.fields}
           behavior={Platform.OS === "android" ? "height" : "height"}
         >
+          {loginError && (
+            <AppText style={{ color: "red", fontSize: 18 }}>
+              Invalid email and/or password
+            </AppText>
+          )}
           <AppForm
             initialValues={{ email: "", password: "" }}
             validationSchema={validationSchema}
@@ -80,13 +93,7 @@ function WelcomeScreen({ navigation }) {
             <AppText style={{ color: "white", fontSize: 18 }}>
               Forgot Password?
             </AppText>
-            <AppText
-              style={styles.signUp}
-              onPress={() => {
-                console.log("Tapped");
-                navigation.navigate("Register");
-              }}
-            >
+            <AppText style={styles.signUp}>
               Do you have an account? Sign up!
             </AppText>
           </View>

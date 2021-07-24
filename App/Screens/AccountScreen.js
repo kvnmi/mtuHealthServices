@@ -37,7 +37,10 @@ function AccountScreen({ navigation }) {
 
   return (
     <Screen style={styles.container}>
-      <ListItem title="Olujulo Tomiwa" subTitle="18010301060" />
+      <ListItem
+        title={auth.currentUser.displayName}
+        subTitle={auth.currentUser.email}
+      />
       <View style={{ marginTop: 50 }}>
         <FlatList
           data={items}

@@ -16,7 +16,7 @@ const getAppointments = async () => {
   } catch (error) {
     console.log("Couldnt print results", error);
   }
-};
+}; // Retrieves all booked appointments
 
 const setAppointment = async (date, time, rawDate) => {
   const currentUser = auth.currentUser.uid;
@@ -49,6 +49,20 @@ const setAppointment = async (date, time, rawDate) => {
   } catch (error) {
     console.log("couldnt book appointmenets", error);
   }
-};
+}; // Books a doctor Appointment
 
-export default { setAppointment, getAppointments };
+const deleteAppointment = async (id) => {
+  const currentUser = auth.currentUser.uid;
+  try {
+    await db
+      .collection("appointments")
+      .doc(currentUser)
+      .update({
+        data: firebase.firestore.FieldValue.arrayRemove(id),
+      });
+  } catch (error) {
+    console.log("Couldnt delete appointments", error);
+  }
+}; // Deletes a booked appoinment
+
+export default { setAppointment, getAppointments, deleteAppointment };

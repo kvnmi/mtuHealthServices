@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Image } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import Modal from "react-native-modal";
 import Screen from "../components/Screen";
 import AppButtons from "../config/AppButton";
 import colors from "../config/colors";
 import AppText from "../config/AppText";
 import appointments from "../api/appointments";
+import allAppointments from "../api/currentAppointment";
+import SucessModal from "../components/SucessModal";
 
 function BookingScreen(props) {
   const [date, setDate] = useState(""); // Date state variable
   const [rawDate, setRawDate] = useState(new Date()); // Date state variable
   const [time, setTime] = useState(""); // Time state variable
-  const [dateVisible, setDateVisible] = useState(false);
-  const [timeVisible, setTimeVisible] = useState(false);
+  const [dateVisible, setDateVisible] = useState(false); // Date Modal
+  const [timeVisible, setTimeVisible] = useState(false); // Time Modal
+  const [modalVisible, setModalVisible] = useState(false); // Sucess Modal
 
   const onPickDate = (date, rawDate) => {
     setDate(date);
@@ -33,39 +37,56 @@ function BookingScreen(props) {
   const bookAppointments = async () => {
     try {
       await appointments.setAppointment(date, time, rawDate);
+      const result = await allAppointments.setCurrentAppointment(
+        date,
+        time,
+        rawDate
+      );
+      if (result) setModalVisible(true);
     } catch (error) {
       console.log("Couldnt book appointments", error);
     }
   }; // Books appointment
 
   return (
-    <Screen style={{ flex: 1, backgroundColor: "white" }}>
-      <View style={styles.container}>
-        <Image source={require("../assets/1.jpg")} style={styles.image} />
-        <AppText style={styles.text1}>Book a Doctor Today</AppText>
-        <AppText style={styles.text2}>
-          A very easy way to make an appointment with a doctor.
-        </AppText>
-        <AppButtons
-          title="Let's get started"
-          textStyle={styles.text}
-          onPress={() => setDateVisible(true)}
-          style={styles.button}
-        />
-        <DateTimePickerModal
-          isVisible={dateVisible}
-          mode="date"
-          onCancel={() => setDateVisible(false)}
-          onConfirm={(date) => onPickDate(date.toDateString(), date)}
-        />
-        <DateTimePickerModal
-          isVisible={timeVisible}
-          mode="time"
-          onCancel={() => setTimeVisible(false)}
-          onConfirm={(time) => onPickTime(time.toLocaleTimeString())}
-        />
-      </View>
-    </Screen>
+    <>
+      <Screen style={{ flex: 1, backgroundColor: "white" }}>
+        <View style={styles.container}>
+          <Image source={require("../assets/1.jpg")} style={styles.image} />
+          <AppText style={styles.text1}>Book a Doctor Today</AppText>
+          <AppText style={styles.text2}>
+            A very easy way to make an appointment with a doctor.
+          </AppText>
+          <AppButtons
+            title="Let's get started"
+            textStyle={styles.text}
+            onPress={() => setDateVisible(true)}
+            style={styles.button}
+          />
+          <DateTimePickerModal
+            isVisible={dateVisible}
+            mode="date"
+            onCancel={() => setDateVisible(false)}
+            onConfirm={(date) => onPickDate(date.toDateString(), date)}
+          />
+          <DateTimePickerModal
+            isVisible={timeVisible}
+            mode="time"
+            onCancel={() => setTimeVisible(false)}
+            onConfirm={(time) => onPickTime(time.toLocaleTimeString())}
+          />
+        </View>
+      </Screen>
+      <Modal
+        isVisible={modalVisible}
+        animationIn="bounceIn"
+        animationInTiming={3000}
+        animationOut="bounceOut"
+        animationOutTiming={1500}
+      >
+        <SucessModal onPress={() => setModalVisible(false)} />
+      </Modal>
+    </>
   );
 }
 

@@ -1,11 +1,13 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
 import Screen from "../components/Screen";
+import AppButton from "../config/AppButton";
 
 function HomeScreen(props) {
   return (
     <Screen style={styles.container}>
       <Text style={styles.text}>Welcome to the Home screen!</Text>
+      <AppButton title="press me" />
     </Screen>
   );
 }

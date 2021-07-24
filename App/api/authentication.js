@@ -31,7 +31,7 @@ const regUsers = async (userCred) => {
   } catch (error) {
     console.log("Something went wrong while registering user", error);
   }
-};
+}; // Registers a new patient
 
 const loginUser = async (userCred) => {
   try {
@@ -46,7 +46,7 @@ const loginUser = async (userCred) => {
   } catch (error) {
     console.log("Something went wrong while login user", error);
   }
-};
+}; // Logs a new patient into the system
 
 export default {
   regUsers,

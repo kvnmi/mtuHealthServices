@@ -2,20 +2,18 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import AppButtons from "../config/AppButton";
 import AppText from "../config/AppText";
-import colors from "../config/colors";
 
-function AppointmentCard({ date, time, onPress }) {
+function DoctorAppointmentCard({ date, time, onPress, nurse = true, name }) {
   return (
     <View style={styles.card}>
       <AppText style={{ fontSize: 19, marginBottom: 20, fontStyle: "italic" }}>
         SUCCESSFULLY BOOKED APPOINTMENT!!!
       </AppText>
       <AppText style={{ fontSize: 18, marginBottom: 20 }}>
-        You are scheduled to visit the clinic on {date}, at {time}. Lateness
-        will not be tolerated.
+        {name} has been scheduled to visit the clinic on {date}, at {time}.
       </AppText>
       <AppButtons
-        title="Cancel Appointment"
+        title="View Appointment Details"
         style={styles.button}
         onPress={onPress}
       />
@@ -28,7 +26,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   card: {
-    backgroundColor: colors.white,
+    backgroundColor: "white",
     paddingVertical: 18,
     paddingHorizontal: 18,
     justifyContent: "center",
@@ -52,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppointmentCard;
+export default DoctorAppointmentCard;
