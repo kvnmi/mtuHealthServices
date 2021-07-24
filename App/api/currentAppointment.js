@@ -59,7 +59,21 @@ const setCurrentAppointment = async (date, time, rawDate) => {
   return true;
 }; // Stores all the appointments that have been booked.
 
+const deleteAppointment = async (id) => {
+  try {
+    await db
+      .collection("currentAppointments")
+      .doc("allAppointments")
+      .update({
+        data: firebase.firestore.FieldValue.arrayRemove(id),
+      });
+  } catch (error) {
+    console.log("Couldnt delete appointments", error);
+  }
+}; // Deletes a booked appoinment
+
 export default {
   setCurrentAppointment,
   getCurrentAppointment,
+  deleteAppointment,
 };

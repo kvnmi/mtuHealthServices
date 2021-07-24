@@ -38,6 +38,7 @@ function AccountScreen({ navigation }) {
   return (
     <Screen style={styles.container}>
       <ListItem
+        iconName="account-arrow-left"
         title={auth.currentUser.displayName}
         subTitle={auth.currentUser.email}
       />

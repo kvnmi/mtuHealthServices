@@ -4,16 +4,21 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AppText from "../config/AppText";
 import colors from "../config/colors";
 
-function ListItem({ title, subTitle }) {
+function ListItem({
+  title,
+  subTitle,
+  style,
+  onPress,
+  iconName,
+  color = "primary",
+}) {
   return (
-    <TouchableHighlight>
-      <View style={styles.container}>
-        <View style={styles.iconBackground}>
-          <MaterialCommunityIcons
-            name="account-arrow-left"
-            size={30}
-            color="white"
-          />
+    <TouchableHighlight onPress={onPress} underlayColor="white">
+      <View style={[styles.container, style]}>
+        <View
+          style={[styles.iconBackground, { backgroundColor: colors[color] }]}
+        >
+          <MaterialCommunityIcons name={iconName} size={30} color="white" />
         </View>
         <View style={styles.textContainer}>
           <AppText style={{ fontSize: 20 }}>{title}</AppText>
@@ -32,7 +37,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   iconBackground: {
-    backgroundColor: colors.primary,
     height: 50,
     width: 50,
     borderRadius: 25,

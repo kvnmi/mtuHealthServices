@@ -21,6 +21,7 @@ const regUsers = async (userCred) => {
           userRole: "patient",
           userId: auth.currentUser.uid,
         });
+        return user.user.uid;
       } catch (error) {
         console.log(
           "Something went wrong while saving user credentials",
