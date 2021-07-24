@@ -37,9 +37,7 @@ function NurseAppointmentScreen({ navigation }) {
           <ScrollView style={{ backgroundColor: colors.lightgrey }}>
             <FlatList
               data={appointmentDate.filter(
-                (x) =>
-                  x.appointmentId.date.toDate() >= new Date() &&
-                  x.appointmentStatus == false
+                (x) => x.appointmentId.date.toDate() >= new Date()
               )}
               keyExtractor={(m) => m.appointmentId.id}
               renderItem={({ item }) => (
